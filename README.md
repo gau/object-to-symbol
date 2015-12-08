@@ -1,6 +1,6 @@
 # README
 
-Illustratorのオブジェクトやグループをシンボルに置き換えるスクリプトです。
+Illustratorのオブジェクトやグループをシンボルに置き換えるスクリプトです。（[図入りの解説](http://graphicartsunit.tumblr.com/post/134802610854/object-to-symbol)）
 
 -----
 
@@ -14,13 +14,6 @@ Illustratorのオブジェクトやグループをシンボルに置き換える
 ### 対応バージョン
 
 * Illustrator CS5／CS6／CC／CC 2014／CC 2015（19.2.0は未検証）
-
------
-
-### ダウンロード
-
-* スクリプトををダウンロードする（master.zip／zip形式）
-* GitHubのリポジトリからもダウンロードできます
 
 -----
 
