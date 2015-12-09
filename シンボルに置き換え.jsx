@@ -4,12 +4,12 @@ Copyright (c) 2015 Toshiyuki Takahashi
 Released under the MIT license
 http://opensource.org/licenses/mit-license.php
 http://www.graphicartsunit.com/
-ver. 0.5.1
+ver. 0.5.5
 */
 (function() {
 
 	var SCRIPT_TITLE = 'シンボルに置き換え';
-	var SCRIPT_VERSION = '0.5.1';
+	var SCRIPT_VERSION = '0.5.5';
 
 	// Settings
 	var settings = {
@@ -46,15 +46,15 @@ ver. 0.5.1
 		thisObj.buttonGroup.alignment = 'center';
 		thisObj.buttonGroup.orientation = 'row';
 
-		thisObj.selectedSymbol = thisObj.targetPanel.add("dropdownlist", undefined, symbolName);
+		thisObj.selectedSymbol = thisObj.targetPanel.add("listbox", undefined, symbolName);
 		thisObj.selectedSymbol.selection = settings.symbolIndex;
-		thisObj.selectedSymbol.size = [350, 25];
+		thisObj.selectedSymbol.size = [350, 150];
 
 		thisObj.cancel = thisObj.buttonGroup.add('button', undefined, 'キャンセル', {name: 'cancel'});
 		thisObj.ok = thisObj.buttonGroup.add('button', undefined, '実行', { name:'ok'});
 		function previewRefresh(event) {
 			try {
-				settings.symbolIndex = event.target.selection.index;
+				settings.symbolIndex = event.target.selection;
 				thisObj.preview();
 			} catch(e) {
 				alert('エラーが発生して処理を実行できませんでした\nエラー内容：' + e);
@@ -68,7 +68,6 @@ ver. 0.5.1
 		thisObj.ok.onClick = function() {
 			try {
 				settings.symbolIndex = thisObj.selectedSymbol.selection.index;
-				app.redo();
 				mainProcess(false);
 				thisObj.closeDialog();
 			} catch(e) {
@@ -109,9 +108,7 @@ ver. 0.5.1
 
 	// Main process
 	function mainProcess(isPreview) {
-
 		var targetitems = getTargetItems(sel);
-
 		for (var i = 0; i < targetitems.length; i++) {
 			addedSymbol = lay.symbolItems.add(symbols[settings.symbolIndex]);
 			var tb = targetitems[i].geometricBounds;
@@ -126,6 +123,7 @@ ver. 0.5.1
 			}
 		}
 	}
+
 	// Get target items
 	function getTargetItems(obj) {
 		var items = [];
