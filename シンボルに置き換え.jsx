@@ -4,16 +4,17 @@ Copyright (c) 2015 Toshiyuki Takahashi
 Released under the MIT license
 http://opensource.org/licenses/mit-license.php
 http://www.graphicartsunit.com/
-ver. 0.5.0
+ver. 0.5.1
 */
 (function() {
 
 	var SCRIPT_TITLE = 'シンボルに置き換え';
-	var SCRIPT_VERSION = '0.5.0';
+	var SCRIPT_VERSION = '0.5.1';
 
 	// Settings
 	var settings = {
-		'symbolIndex' : 0
+		'symbolIndex' : 0,
+		'maxSymbols' : 20
 	};
 
 	var doc = app.activeDocument;
@@ -36,8 +37,8 @@ ver. 0.5.0
 		thisObj.dlg.margins = [unit * 1.5, unit * 1.5, unit * 1.5, unit * 1.5];
 
 		thisObj.targetPanel = thisObj.dlg.add('panel', undefined, 'シンボル：');
-		thisObj.targetPanel.alignment = 'left';
 		thisObj.targetPanel.margins = [unit, unit, unit, unit];
+		thisObj.targetPanel.alignment = 'left';
 		thisObj.targetPanel.orientation = 'row';
 
 		thisObj.buttonGroup = thisObj.dlg.add('group', undefined);
@@ -47,11 +48,10 @@ ver. 0.5.0
 
 		thisObj.selectedSymbol = thisObj.targetPanel.add("dropdownlist", undefined, symbolName);
 		thisObj.selectedSymbol.selection = settings.symbolIndex;
-		thisObj.selectedSymbol.size = [400, 25];
+		thisObj.selectedSymbol.size = [350, 25];
 
 		thisObj.cancel = thisObj.buttonGroup.add('button', undefined, 'キャンセル', {name: 'cancel'});
 		thisObj.ok = thisObj.buttonGroup.add('button', undefined, '実行', { name:'ok'});
-		
 		function previewRefresh(event) {
 			try {
 				settings.symbolIndex = event.target.selection.index;
@@ -68,6 +68,7 @@ ver. 0.5.0
 		thisObj.ok.onClick = function() {
 			try {
 				settings.symbolIndex = thisObj.selectedSymbol.selection.index;
+				app.redo();
 				mainProcess(false);
 				thisObj.closeDialog();
 			} catch(e) {
@@ -91,12 +92,13 @@ ver. 0.5.0
 	};
 	var dialog;
 	if (!doc || sel.length < 1) {
-		alert('オブジェクトが選択されていません');
+		alert('オブジェクトが選択されていません\n少なくとも1つ以上のオブジェクトを選択してください');
 	} else if (!lay.visible || lay.locked) {
-		alert('選択レイヤーがロックされているか非表示になっています');
-	} else if (sel.length > 20) {
-		var cnt = confirm(sel.length + '個のオブジェクトが選択されており、処理にとても時間がかかる可能性があります。継続しますか？');
-		if(cnt) {
+		alert('選択レイヤーがロックされているか非表示になっています\nレイヤーのロック、非表示を解除するか、別のレイヤーを選択してください');
+	} else if (symbolName.length < 1) {
+		alert('使用するシンボルがありません\n事前に1つ以上のシンボルを登録してください');
+	} else if (sel.length > settings.maxSymbols) {
+		if(confirm(sel.length + '個のオブジェクトが選択されています\n対象のオブジェクト数が多いと時間がかかる可能性があります。一度に処理するのは ' + settings.maxSymbols + ' 個以下が推奨です。このまま継続しますか？')) {
 			dialog = new mainDialog();
 			dialog.showDialog();
 		}
@@ -117,14 +119,13 @@ ver. 0.5.0
 			addedSymbol.top = tb[3] - ((tb[3] - tb[1])/2) - ((sb[3] - sb[1])/2);
 			addedSymbol.left = tb[2] - ((tb[2] - tb[0])/2) - ((sb[2] - sb[0])/2);
 			if(isPreview) {
-				sel[i].hidden = true;
+				targetitems[i].hidden = true;
 			} else {
 				addedSymbol.selected = true;
-				sel[i].remove();
+				targetitems[i].remove();
 			}
 		}
 	}
-
 	// Get target items
 	function getTargetItems(obj) {
 		var items = [];
