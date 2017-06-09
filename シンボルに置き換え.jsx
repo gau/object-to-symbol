@@ -1,15 +1,14 @@
 /*
 シンボルに置き換え.jsx
-Copyright (c) 2015 Toshiyuki Takahashi
+Copyright (c) 2015 - 2017 Toshiyuki Takahashi
 Released under the MIT license
 http://opensource.org/licenses/mit-license.php
 http://www.graphicartsunit.com/
-ver. 0.5.5
 */
 (function() {
 
 	var SCRIPT_TITLE = 'シンボルに置き換え';
-	var SCRIPT_VERSION = '0.5.5';
+	var SCRIPT_VERSION = '0.5.6';
 
 	// Settings
 	var settings = {
@@ -110,11 +109,12 @@ ver. 0.5.5
 	function mainProcess(isPreview) {
 		var targetitems = getTargetItems(sel);
 		for (var i = 0; i < targetitems.length; i++) {
-			addedSymbol = lay.symbolItems.add(symbols[settings.symbolIndex]);
+			var addedSymbol = targetitems[i].layer.symbolItems.add(symbols[settings.symbolIndex]);
 			var tb = targetitems[i].geometricBounds;
 			var sb = addedSymbol.geometricBounds;
 			addedSymbol.top = tb[3] - ((tb[3] - tb[1])/2) - ((sb[3] - sb[1])/2);
 			addedSymbol.left = tb[2] - ((tb[2] - tb[0])/2) - ((sb[2] - sb[0])/2);
+			addedSymbol.move(targetitems[i], ElementPlacement.PLACEBEFORE);
 			if(isPreview) {
 				targetitems[i].hidden = true;
 			} else {

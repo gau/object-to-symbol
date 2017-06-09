@@ -6,6 +6,7 @@ Illustratorのオブジェクトやグループをシンボルに置き換える
 
 ### 更新履歴
 
+* 0.5.6：置き換え後のシンボルの重ね順が対象オブジェクトと同じになるよう修正
 * 0.5.5：ドロップダウンをリストボックスに変更
 * 0.5.1：シンボルの登録がひとつもない場合の処理を追加
 * 0.5.0：選択オブジェクトが大きときに警告を表示（公開）
@@ -15,7 +16,7 @@ Illustratorのオブジェクトやグループをシンボルに置き換える
 
 ### 対応バージョン
 
-* Illustrator CS5／CS6／CC／CC 2014／CC 2015（19.2.0は未検証）
+* Illustrator CS5 〜 CC 2017
 
 -----
 
@@ -52,14 +53,14 @@ Illustratorのオブジェクトやグループをシンボルに置き換える
 ### 免責事項
 
 * このスクリプトを使って起こったいかなる現象についても制作者は責任を負えません。すべて自己責任にてお使いください。
-* CS5、CS6、CC、CC 2014、CC 2015（19.1.0まで）で動作の確認はしましたが、OSのバージョンやその他の状況によって実行できないことがあるかもしれません。もし動かなかったらごめんなさい。
+* CS5からCC 2017で動作の確認はしましたが、OSのバージョンやその他の状況によって実行できないことがあるかもしれません。もし動かなかったらごめんなさい。
 
 -----
 
 ### ライセンス
 
 * シンボルに置き換え.jsx
-* Copyright © 2015 Toshiyuki Takahashi
+* Copyright © 2015 - 2017 Toshiyuki Takahashi
 * [Released under the MIT license](http://opensource.org/licenses/mit-license.php)
 * Created by Toshiyuki Takahashi ([Graphic Arts Unit](http://www.graphicartsunit.com/))
 * [Twitter](https://twitter.com/gautt)
